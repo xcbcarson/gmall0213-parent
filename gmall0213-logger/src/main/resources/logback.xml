@@ -2,6 +2,7 @@
 <configuration>
     <property name="LOG_HOME" value="/opt/module/applog/gmall0213" />
 
+
     <!--f:/applog/gmall0213-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

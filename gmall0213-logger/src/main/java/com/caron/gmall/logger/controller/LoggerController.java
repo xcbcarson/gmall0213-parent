@@ -28,7 +28,6 @@ public class LoggerController {
         System.out.println(json);
 
         JSONObject jsonObject = JSON.parseObject(json);
-
         if(jsonObject.getString("start") != null && jsonObject.getString("start").length()>0){
             kafkaTemplate.send("GMALL_START0213",json);
         }else{
