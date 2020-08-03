@@ -1,7 +1,6 @@
 package com.caron.gmall.realtime.util
 
 import java.util
-
 import org.apache.kafka.common.TopicPartition
 import org.apache.spark.streaming.kafka010.OffsetRange
 import redis.clients.jedis.Jedis
@@ -12,7 +11,7 @@ import redis.clients.jedis.Jedis
  * @Description ${description}
  * @Version $version
  */
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 object OffsetManager {
   def getOffset(topic:String ,consumerGroupId:String ): Map[TopicPartition,Long] = {
     val jedis = RedisUtil.getJedisClient
@@ -21,7 +20,7 @@ object OffsetManager {
     val offsetMap: util.Map[String, String] = jedis.hgetAll(offsetKey)
     jedis.close()
     if(offsetMap != null && offsetMap.size() > 0){
-      val offsetList: List[(String, String)] = offsetMap.toList
+      val offsetList: List[(String, String)] = offsetMap.asScala.toList
       val offsetMyForKafka: Map[TopicPartition, Long] = offsetList.map {
         case (partition, offset) => {
           val topicPartition = new TopicPartition(topic, partition.toInt)
@@ -51,6 +50,5 @@ object OffsetManager {
     jedis.hmset(offsetKey,offsetMap)
     jedis.close()
   }
-
 
 }
